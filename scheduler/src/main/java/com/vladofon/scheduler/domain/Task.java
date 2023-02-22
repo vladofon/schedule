@@ -2,6 +2,8 @@ package com.vladofon.scheduler.domain;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -13,6 +15,7 @@ import lombok.Data;
 
 @Entity
 @Data
+@JsonIgnoreProperties(value = { "executor" })
 public class Task {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
