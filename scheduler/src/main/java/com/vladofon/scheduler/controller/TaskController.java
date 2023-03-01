@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vladofon.scheduler.domain.Task;
+import com.vladofon.scheduler.dto.TaskFormDto;
 import com.vladofon.scheduler.service.TaskService;
 
 @RestController
@@ -36,9 +37,8 @@ public class TaskController {
 	}
 	
 	@PostMapping()
-	public String create(@RequestBody Task task) {
-		taskService.create(task);
-		return "Task was created";
+	public Task create(@RequestBody TaskFormDto taskDto) throws Exception {
+		return taskService.create(taskDto);
 	}
 	
 	@PutMapping("{taskId}")
@@ -52,5 +52,10 @@ public class TaskController {
 		taskService.delete(taskId);
 		
 		return "Task [" + taskId + "] was deleted";
+	}
+	
+	@GetMapping("/from-employee/{employeeId}")
+	public List<Task> employeeTasks(@PathVariable Long employeeId) throws Exception {
+		return taskService.getByEmployee(employeeId);
 	}
 }

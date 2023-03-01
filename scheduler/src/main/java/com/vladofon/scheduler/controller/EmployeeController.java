@@ -36,9 +36,8 @@ public class EmployeeController {
 	}
 	
 	@PostMapping()
-	public String create(@RequestBody Employee user) {
-		employeeService.create(user);
-		return "User was created";
+	public Employee create(@RequestBody Employee user) {
+		return employeeService.create(user);
 	}
 	
 	@PutMapping("{userId}")
