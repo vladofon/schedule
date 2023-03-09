@@ -2,6 +2,7 @@ package com.vladofon.scheduler.domain;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -19,7 +20,6 @@ import lombok.Data;
 
 @Entity
 @Data
-//@JsonIgnoreProperties(value = { "executor" })
 public class Task {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,8 +29,6 @@ public class Task {
 	private Long estimatedTime;
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "employee_id")
-	@JsonIdentityReference
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	private Employee executor;
 	
 	public static Long timeSum(List<Task> tasks) {

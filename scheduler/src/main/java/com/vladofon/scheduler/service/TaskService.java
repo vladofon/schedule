@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.vladofon.scheduler.domain.Employee;
 import com.vladofon.scheduler.domain.Task;
 import com.vladofon.scheduler.dto.TaskFormDto;
+import com.vladofon.scheduler.dto.TaskPreviewDto;
 import com.vladofon.scheduler.repo.EmployeeRepo;
 import com.vladofon.scheduler.repo.TaskRepo;
 
@@ -24,27 +25,27 @@ public class TaskService {
 		this.taskRepo = taskRepo;
 	}
 	
-	public List<Task> getAll() {
-		return taskRepo.findAll();
+	public List<TaskPreviewDto> getAll() {
+		return taskRepo.findAll().stream().map(task -> new TaskPreviewDto(task)).toList();
 	}
 	
 	public Task getOne(Long id) {
 		return taskRepo.findById(id).get();
 	}
 	
-	public List<Task> getByEmployee(Long employeeId) throws Exception {
+	public List<TaskPreviewDto> getByEmployee(Long employeeId) throws Exception {
 		Optional<Employee> executor = employeeRepo.findById(employeeId);
 		
 		if(executor.isPresent()) {
-			return taskRepo.findByExecutor(executor.get());
+			return taskRepo.findByExecutor(executor.get()).stream().map(task -> new TaskPreviewDto(task)).toList();
 		}
 		
 		throw new Exception("Employee with id [" + employeeId + "] was not found by getting emploees' tasks");
 	}
 	
-	public Task create(TaskFormDto taskDto) throws Exception {
+	public TaskPreviewDto create(TaskFormDto taskDto) throws Exception {
 
-		return taskRepo.save(map(taskDto));
+		return new TaskPreviewDto(taskRepo.save(map(taskDto)));
 	}
 	
 	public Task create(Task task) {

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vladofon.scheduler.domain.Employee;
+import com.vladofon.scheduler.dto.EmployeePreviewDto;
 import com.vladofon.scheduler.service.EmployeeService;
 
 @RestController
@@ -26,17 +27,17 @@ public class EmployeeController {
 	}
 	
 	@GetMapping()
-	public List<Employee> list() {
+	public List<EmployeePreviewDto> list() {
 		return employeeService.getAll();
 	}
 	
 	@GetMapping("{userId}")
-	public Employee one(@PathVariable Long userId) throws Exception {
+	public EmployeePreviewDto one(@PathVariable Long userId) throws Exception {
 		return employeeService.getOne(userId);
 	}
 	
 	@PostMapping()
-	public Employee create(@RequestBody Employee user) {
+	public EmployeePreviewDto create(@RequestBody Employee user) {
 		return employeeService.create(user);
 	}
 	
